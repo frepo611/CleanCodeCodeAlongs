@@ -1,6 +1,7 @@
 name: Manual .Net Build
 
-on: workflow_dispatch
+on:
+  workflow_dispatch
 
 jobs:
   print-runtime-context:
@@ -8,10 +9,10 @@ jobs:
 
     steps:
       - name: Start build process
-      - run: echo "Build process has started..."
+        run: echo "Build process has started..."
 
       - name: Show runtime context
-      - run: |
+        run: |
           echo "Runner OS: ${{ runner.os }}"
           echo "Repository: ${{ github.repository }}"
           echo "Workflow: ${{ github.workflow}}"
