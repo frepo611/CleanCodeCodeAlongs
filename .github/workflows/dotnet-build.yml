@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   print-runtime-context:
-    runs-on: ubunta-latest
+    runs-on: ubuntu_latest
 
     steps:
       - name: Start build process
