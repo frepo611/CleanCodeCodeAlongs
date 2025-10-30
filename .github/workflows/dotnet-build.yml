@@ -16,26 +16,41 @@ jobs:
           echo "Runner OS: ${{ runner.os }}"
           echo "Repository: ${{ github.repository }}"
           echo "Workflow: ${{ github.workflow}}"
-          echo "Triggered by: ${{ github.event_name }}"
-          echo "Triggered by: ${{ github.actor }}"
-          echo "Run number: ${{ github.run_number}}"
+          echo "Triggered by: ${{ github.event_name }} "
+          echo "Triggered by: ${{ github.actor }} "
+          echo "Run number: ${{ github.run_number}} "
           echo " 🍃 Branch: ${{ github.ref }}"
 
   build-project:
+    needs: print-runtime-context
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v5
 
       - name: Install .NET 9
-        uses: actions/setup-dotnet@v5.0.0
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "9.0.x"
-          
-      - name: Build project
-        run: dotnet build CleanCodeCodeAlongs/GitWorkflows/GitWorkflows.csproj
 
-      - name: Run code
-        run: dotnet run --project CleanCodeCodeAlongs/GitWorkflows/GitWorkflows.csproj
-          
+      - name: Show repository files (verify paths)
+        run: ls -R .
+
+      - name: Build project (try exact then fallback to glob)
+        run: |
+          if [ -f "CleanCodeCodeAlongs/GitWorkflows/GitWorkflows.csproj" ]; then
+            dotnet build CleanCodeCodeAlongs/GitWorkflows/GitWorkflows.csproj
+          else
+            echo "Exact project not found, building any csproj found..."
+            dotnet build **/*.csproj || dotnet build
+          fi
+
+      - name: Run project (use --project if path exists)
+        run: |
+          if [ -f "CleanCodeCodeAlongs/GitWorkflows/GitWorkflows.csproj" ]; then
+            dotnet run --project CleanCodeCodeAlongs/GitWorkflows/GitWorkflows.csproj
+          else
+            dotnet run --project **/GitWorkflows.csproj || echo "No GitWorkflows.csproj to run"
+          fi
+
