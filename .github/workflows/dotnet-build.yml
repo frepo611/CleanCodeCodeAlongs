@@ -1,1 +1,22 @@
+name: Manual .Net Build
 
+on: workflow_dispatch
+
+jobs:
+  print-runtime-context:
+    runs-on: ubunta-latest
+
+    steps:
+      - name: Start build process
+      - run: echo "Build process has started..."
+
+      - name: Show runtime context
+      - run: |
+          echo "Runner OS: ${{ runner.os }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Workflow: ${{ github.workflow}}"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Triggered by: ${{ github.actor }}"
+          echo "Run number: ${{ github:run_number}}"
+          echo " 🍃 Branch: ${{ github.ref }}"
+                        
