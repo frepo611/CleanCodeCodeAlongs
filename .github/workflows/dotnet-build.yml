@@ -34,8 +34,8 @@ jobs:
           dotnet-version: "9.0.x"
           
       - name: Build project
-        run: dotnet build .\CleanCodeCodeAlongs\GitWorkflows\GitWorkflows.csproj
+        run: dotnet build CleanCodeCodeAlongs\GitWorkflows\GitWorkflows.csproj
 
       - name: Run code
-        run: dotnet run --project .\CleanCodeCodeAlongs\GitWorkflows\GitWorkflows.csproj
+        run: dotnet run --project CleanCodeCodeAlongs\GitWorkflows\GitWorkflows.csproj
           
