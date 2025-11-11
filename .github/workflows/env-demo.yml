@@ -1,0 +1,32 @@
+name: Env Context Demo
+
+on:
+  workflow_dispatch:
+
+env:
+  WORKFLOW_LEVEL: "Workflow scope"
+
+jobs:
+ show-env:
+   runs-on: ubuntu_latest
+   env:
+     JOB_LEVEL: "Job scope"
+   steps:
+    - name: Step with its own env
+      env:
+        STEP_LEVEL: "Step scope"
+      run: |
+        echo "Workflow level: $WORKFLOW_LEVEL"
+        echo "Job level: $JOB_LEVEL"
+        echo "Step level: $STEP_LEVEL"
+
+    - name: Try to access STEP_LEVEL1 in another step
+      env:
+        STEP_LEVEL2: "step score variable 2"
+
+      run: |
+        if [ -z "STEP_LEVEL" ]; then
+          echo "STEP_LEVEL is not available in"
+        else
+         "STEP_LEVEL is: $STEP_LEVEL"
+        fi
