@@ -8,7 +8,7 @@ env:
 
 jobs:
  show-env:
-   runs-on: ubuntu_latest
+   runs-on: ubuntu-latest
    env:
      JOB_LEVEL: "Job scope"
    steps:
