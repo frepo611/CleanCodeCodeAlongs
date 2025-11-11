@@ -1,0 +1,26 @@
+name: Conditions Demo
+
+on:
+  push
+
+jobs:
+  conditional-job:
+    runs-on: ubuntu-latest
+    steps:
+     - name: Always runs
+       run: echo "This always runs"
+
+     - name: Runs only if previous step succeeded
+       if: success()
+       run: echo "Previous step succeeded"
+
+     - name: Simulating a failing step
+       run: |
+         echo "Step fails intentionally"
+         exit 1
+
+     - name: Runs only if previous step fails
+       if: failure()
+       run: |
+          echo "Previous step fails"
+         
